@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://phonebook-production-53a.up.railway.app';
+const API_BASE_URL = 'https://phonebook-production-53a.up.railway.app/api';
 
 // Auth API
 class AuthAPI {
