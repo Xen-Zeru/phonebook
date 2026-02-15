@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - JJF Phonebook</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/pb.png">
+</head>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-header">
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            <div class="auth-brand">
+                <i class="fas fa-address-book"></i>
+                <span>JJF Phonebook</span>
+            </div>
+        </div>
+
+        <div class="auth-card">
+            <div class="auth-card-header">
+                <h2>Create Account</h2>
+            </div>
+
+            <form id="registerForm" class="auth-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">
+                            <i class="fas fa-user"></i> First Name
+                        </label>
+                        <input type="text" id="firstName" required placeholder="Johnrobel">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">
+                            <i class="fas fa-user"></i> Last Name
+                        </label>
+                        <input type="text" id="lastName" required placeholder="Gestat">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input type="email" id="regEmail" required placeholder="johnrobel@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">
+                        <i class="fas fa-lock"></i> Password
+                    </label>
+                    <div class="password-input">
+                        <input type="password" id="regPassword" required placeholder="Create a password">
+                        <button type="button" class="toggle-password" id="toggleRegPassword">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength">
+                        <div class="strength-bar"></div>
+                        <span class="strength-text">Password strength: <span id="strengthLabel">Weak</span></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="checkbox">
+                        <input type="checkbox" id="terms" required>
+                        <span class="checkmark"></span>
+                        I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary btn-block">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign in here</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="auth-features">
+            <div class="feature">
+                <i class="fas fa-rocket"></i>
+                <h4>Free</h4>
+                <p>Full access to all features</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h4>Saved Contacts</h4>
+                <p>Stored friend or loved ones Contacts</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-user-check"></i>
+                <h4>No Credit Card</h4>
+                <p>Start without any payment</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

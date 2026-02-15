@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - JJF Phonebook</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/pb.png">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/auth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4f46e5">
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <i class="fas fa-address-book"></i>
+            <span>JJF Phonebook</span>
+          </div>
+          <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+          <div class="user-avatar">
+            <i class="fas fa-user-circle"></i>
+            <span class="user-status online"></span>
+          </div>
+          <div class="user-info">
+            <h3 id="userName">Loading...</h3>
+            <p id="userEmail">loading...</p>
+            <span class="user-role" id="userRole">User</span>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <p class="nav-label">MAIN</p>
+            <a href="#" class="nav-item active" data-section="contacts">
+              <i class="fas fa-users"></i>
+              <span>Contacts</span>
+              <span class="nav-badge" id="contactsBadge">0</span>
+            </a>
+            <a href="#" class="nav-item" data-section="add-contact" id="addContactBtn">
+              <i class="fas fa-user-plus"></i>
+              <span>Add Contact</span>
+            </a>
+            <a href="#" class="nav-item" data-section="favorites">
+              <i class="fas fa-star"></i>
+              <span>Favorites</span>
+              <span class="nav-badge" id="favoritesBadge">0</span>
+            </a>
+          </div>
+          
+          <div class="nav-section">
+            <p class="nav-label">SETTINGS</p>
+            <a href="#" class="nav-item" data-section="profile">
+              <i class="fas fa-user-cog"></i>
+              <span>Profile</span>
+            </a>
+          </div>
+
+          <div class="nav-section">
+            <a href="#" class="nav-item" id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </nav>
+
+        <!-- Sidebar Footer -->
+        <div class="sidebar-footer">
+          <div class="storage-info">
+            <div class="storage-header">
+              <p>Storage</p>
+              <span id="storagePercent">0%</span>
+            </div>
+            <div class="storage-bar">
+              <div class="storage-progress" id="storageProgress"></div>
+            </div>
+          </div>
+          <p class="contacts-count">
+            <i class="fas fa-address-book"></i>
+            <span>Contacts: <strong id="totalContacts">0</strong></span>
+          </p>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Header -->
+        <header class="main-header">
+          <div class="header-left">
+            <div class="breadcrumb">
+              <span class="breadcrumb-item">Dashboard</span>
+              <i class="fas fa-chevron-right"></i>
+              <span class="breadcrumb-item active" id="breadcrumbTitle">Contacts</span>
+            </div>
+            <h1 id="sectionTitle">Contacts</h1>
+            <p id="sectionDescription" class="section-description">Manage all your contacts in one place</p>
+          </div>
+          <div class="header-right">
+            <!-- Search Box -->
+            <div class="search-box-wrapper">
+              <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search contacts by name, phone, or email..."
+                  autocomplete="off"
+                  inputmode="search"
+                  enterkeyhint="search"
+                />
+                <button class="search-clear" id="clearSearch">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              <div class="search-results" id="searchResults"></div>
+            </div>
+            
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+              <button class="icon-btn" id="viewToggle">
+                <i class="fas fa-th-large" id="viewIcon"></i>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- Contacts Section -->
+        <section class="content-section active" id="contactsSection">
+          <div class="section-header">
+            <div class="section-title">
+              <h2>All Contacts</h2>
+              <div class="section-subtitle">
+                <span class="filter-badge active" data-filter="all">All</span>
+                <span class="filter-badge" data-filter="favorites">Favorites</span>
+                <span class="filter-badge" data-filter="recent">Recent</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Stats Cards -->
+          <div class="stats-cards">
+            <div class="stat-card">
+              <div class="stat-icon primary">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="totalContactsCount">0</h3>
+                <p>Total Contacts</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="favoritesCount">0</h3>
+                <p>Favorites</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon warning">
+                <i class="fas fa-building"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="companiesCount">0</h3>
+                <p>Companies</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon danger">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="recentContactsCount">0</h3>
+                <p>Recent (30d)</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contacts Container -->
+          <div class="contacts-container">
+            <div class="contacts-view" id="contactsView">
+              <!-- Grid View (Default) -->
+              <div class="contacts-grid active" id="contactsGrid">
+                <div class="loading">
+                  <i class="fas fa-spinner fa-spin"></i>
+                  <p>Loading contacts...</p>
+                </div>
+              </div>
+              
+              <!-- Table View -->
+              <div class="contacts-table" id="contactsTable" style="display: none;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>
+                        <input type="checkbox" id="selectAll">
+                      </th>
+                      <th>Name</th>
+                      <th>Phone</th>
+                      <th>Email</th>
+                      <th>Company</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="contactsTableBody">
+                    <!-- Table rows will be inserted here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" style="display: none;">
+              <div class="empty-icon">
+                <i class="fas fa-address-book"></i>
+              </div>
+              <h3>No contacts found</h3>
+              <p>Add your first contact to get started</p>
+              <button class="btn-primary" id="addFirstContact">
+                <i class="fas fa-plus"></i> Add Contact
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add/Edit Contact Section -->
+        <section class="content-section" id="addContactSection" style="display: none">
+          <div class="add-contact-layout">
+            <!-- Left Side Form -->
+            <div class="add-contact-form-panel">
+              <div class="form-panel-header">
+                <h2 id="contactFormTitle">Add New Contact</h2>
+                <p id="contactFormSubtitle">Fill in the details</p>
+              </div>
+
+              <form id="contactForm" class="contact-form quick-form">
+                <input type="hidden" id="contactId" value="" />
+                <input type="hidden" id="isFavorite" value="false" />
+
+                <div class="form-group">
+                  <label for="contactName"><i class="fas fa-user"></i> Full Name *</label>
+                  <input type="text" id="contactName" required placeholder="Name" autocomplete="name" />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactPhone"><i class="fas fa-phone"></i> Phone *</label>
+                  <input type="tel" id="contactPhone" required placeholder="Phone" autocomplete="tel" />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactEmail"><i class="fas fa-envelope"></i> Email</label>
+                  <input type="email" id="contactEmail" placeholder="Email" autocomplete="email" />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactCompany"><i class="fas fa-building"></i> Company</label>
+                  <input type="text" id="contactCompany" placeholder="Company" />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactJobTitle"><i class="fas fa-user-tie"></i> Job Title</label>
+                  <input type="text" id="contactJobTitle" placeholder="Job Title" />
+                </div>
+
+                <div class="form-group">
+                  <label for="contactBirthday"><i class="fas fa-birthday-cake"></i> Birthday</label>
+                  <input type="date" id="contactBirthday" />
+                </div>
+
+
+                <div class="form-group">
+                  <label for="contactAddress"><i class="fas fa-map-marker-alt"></i> Address</label>
+                  <textarea id="contactAddress" rows="2" placeholder="Address"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="contactNotes"><i class="fas fa-sticky-note"></i> Notes</label>
+                  <textarea id="contactNotes" rows="2" placeholder="Notes"></textarea>
+                </div>
+
+
+                <div class="form-actions-compact">
+                  <button type="button" class="btn-secondary" id="cancelContact">
+                    <i class="fas fa-times"></i> Cancel
+                  </button>
+                  <button type="submit" class="btn-primary">
+                    <i class="fas fa-save"></i> Save
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Right Side - Preview/Recent Contacts -->
+            <div class="add-contact-preview">
+              <div class="preview-header">
+                <h3><i class="fas fa-list"></i> Recent Contacts</h3>
+              </div>
+              <div class="recent-contacts-list" id="recentContactsList">
+                <p class="empty-state">No recent contacts</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="content-section" id="profileSection" style="display: none">
+          <div class="section-header">
+            <h2>My Profile</h2>
+          </div>
+
+          <div class="profile-container">
+            <!-- Profile Header -->
+            <div class="profile-header">
+              <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">
+                  <i class="fas fa-user-circle"></i>
+                  <button class="avatar-upload" id="avatarUploadBtn">
+                    <i class="fas fa-camera"></i>
+                  </button>
+                </div>
+                <div class="profile-status">
+                  <span class="status-dot online"></span>
+                  <span>Online</span>
+                </div>
+              </div>
+              <div class="profile-info">
+                <h3 id="profileName">Loading...</h3>
+                <p id="profileEmail" class="profile-email">loading...</p>
+                <div class="profile-meta">
+                  <span class="meta-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    Member since: <strong id="memberSince">Loading...</strong>
+                  </span>
+                  <span class="meta-item">
+                    <i class="fas fa-user-tag"></i>
+                    Role: <strong id="profileRole">User</strong>
+                  </span>
+                  <span class="meta-item">
+                    <i class="fas fa-id-card"></i>
+                    User ID: <strong id="userId">Loading...</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="profile-details">
+              <div class="detail-card">
+                <h4><i class="fas fa-info-circle"></i> Account Information</h4>
+                <div class="detail-list">
+                  <div class="detail-item">
+                    <span class="detail-label">Phone Number:</span>
+                    <div class="detail-value-with-action">
+                      <span class="detail-value" id="profilePhone">-</span>
+                      <button class="icon-btn" id="editPhoneBtn">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Address:</span>
+                    <div class="detail-value-with-action">
+                      <span class="detail-value" id="profileAddress">-</span>
+                    </div>
+                  </div>
+                  <div class="detail-item">
+                    <span class="detail-label">Timezone:</span>
+                    <span class="detail-value" id="profileTimezone">-</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Edit Profile Form (Initially Hidden) -->
+            <form id="editProfileForm" class="contact-form" style="display: none;">
+              <div class="form-card">
+                <div class="form-card-header">
+                  <h3><i class="fas fa-user-edit"></i> Edit Profile</h3>
+                </div>
+                <div class="form-card-body">
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="editFirstName">
+                        <i class="fas fa-user"></i> First Name
+                      </label>
+                      <input
+                        type="text"
+                        id="editFirstName"
+                        class="form-control"
+                        placeholder="Enter first name"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="editLastName">
+                        <i class="fas fa-user"></i> Last Name
+                      </label>
+                      <input
+                        type="text"
+                        id="editLastName"
+                        class="form-control"
+                        placeholder="Enter last name"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="editPhone">
+                        <i class="fas fa-phone"></i> Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="editPhone"
+                        class="form-control"
+                        placeholder="Enter phone number"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="editTimezone">
+                        <i class="fas fa-globe"></i> Timezone
+                      </label>
+                      <select id="editTimezone" class="form-control">
+                        <option value="UTC">UTC</option>
+                        <option value="America/New_York">Eastern Time</option>
+                        <option value="America/Chicago">Central Time</option>
+                        <option value="America/Denver">Mountain Time</option>
+                        <option value="America/Los_Angeles">Pacific Time</option>
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div class="form-row">
+                    <div class="form-group">
+                      <label for="editAddress">
+                        <i class="fas fa-map-marker-alt"></i> Address
+                      </label>
+                      <textarea
+                        id="editAddress"
+                        class="form-control"
+                        placeholder="Enter address"
+                        rows="3"
+                      ></textarea>
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="button" class="btn-secondary" id="cancelEditProfile">
+                  <i class="fas fa-times"></i> Cancel
+                </button>
+                <button type="submit" class="btn-primary" id="saveProfile">
+                  <i class="fas fa-save"></i> Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Favorites Section -->
+        <section class="content-section" id="favoritesSection" style="display: none">
+          <div class="section-header">
+            <h2>Favorite Contacts</h2>
+            <p class="section-description">Your most important contacts at a glance</p>
+          </div>
+          
+          <!-- Stats for Favorites -->
+          <div class="stats-cards">
+            <div class="stat-card">
+              <div class="stat-icon primary">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="favoritesTotal">0</h3>
+                <p>Total Favorites</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon success">
+                <i class="fas fa-building"></i>
+              </div>
+              <div class="stat-content">
+                <h3 id="favoritesCompanies">0</h3>
+                <p>Unique Companies</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="contacts-container">
+            <div class="contacts-grid" id="favoritesContainer">
+              <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading favorite contacts...</p>
+              </div>
+            </div>
+            
+            <div class="empty-state" id="favoritesEmptyState" style="display: none;">
+              <div class="empty-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h3>No favorite contacts yet</h3>
+              <p>Mark contacts as favorites to see them here</p>
+              <button class="btn-primary" id="browseContactsBtn">
+                <i class="fas fa-search"></i> Browse Contacts
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Contacts (24h) Section -->
+        <section class="content-section" id="recent24Section" style="display: none">
+          <div class="section-header">
+            <h2>Recently Viewed (Last 24 Hours)</h2>
+            <p class="section-description">Contacts you've accessed in the last 24 hours</p>
+          </div>
+          
+          <div class="contacts-container">
+            <div class="contacts-grid" id="recent24Container">
+              <div class="loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading recent contacts...</p>
+              </div>
+            </div>
+            
+            <div class="empty-state" id="recent24EmptyState" style="display: none;">
+              <div class="empty-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <h3>No recent contacts</h3>
+              <p>View a contact to see it here</p>
+              <button class="btn-primary" id="browseContactsBtn2">
+                <i class="fas fa-search"></i> Browse Contacts
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Loading...</p>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/search.js"></script>
+    
+    <!-- PWA Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+      }
+    </script>
+  </body>
+</html>
