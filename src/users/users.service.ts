@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { v2 as cloudinary } from 'cloudinary';
+import * as streamifier from 'streamifier';
 
 @Injectable()
 export class UsersService {
@@ -29,24 +31,13 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
-    // Map possible camelCase DTO properties to the entity's snake_case columns
     const dto: any = updateUserDto as any;
 
-    if (dto.firstName !== undefined) {
-      user.first_name = dto.firstName;
-    }
-    if (dto.lastName !== undefined) {
-      user.last_name = dto.lastName;
-    }
-    // Accept both snake_case and camelCase for backward compatibility
-    if (dto.first_name !== undefined) {
-      user.first_name = dto.first_name;
-    }
-    if (dto.last_name !== undefined) {
-      user.last_name = dto.last_name;
-    }
+    if (dto.firstName !== undefined) user.first_name = dto.firstName;
+    if (dto.lastName !== undefined) user.last_name = dto.lastName;
+    if (dto.first_name !== undefined) user.first_name = dto.first_name;
+    if (dto.last_name !== undefined) user.last_name = dto.last_name;
 
-    // Assign remaining fields (phone, address, timezone, avatar_url, etc.)
     const { firstName, lastName, first_name, last_name, ...rest } = dto;
     Object.assign(user, rest);
 
@@ -57,6 +48,20 @@ export class UsersService {
     const user = await this.findOne(id);
     user.avatar_url = avatarUrl;
     return this.usersRepository.save(user);
+  }
+
+  async uploadToCloudinary(file: Express.Multer.File): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: 'avatars' },
+        (error, result) => {
+          if (result) resolve(result);
+          else reject(error);
+        },
+      );
+
+      streamifier.createReadStream(file.buffer).pipe(stream);
+    });
   }
 
   async remove(id: number): Promise<void> {
