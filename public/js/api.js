@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'https://jjf-phonebook.up.railway.app/api';
+const API_BASE_URL = 'https://jjfphonebook.up.railway.app/api';
 
 // Auth API
 class AuthAPI {
