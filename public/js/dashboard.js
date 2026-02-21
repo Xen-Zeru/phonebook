@@ -349,24 +349,34 @@ function createContactTableRow(contact) {
 
 async function toggleFavorite(contactId, button) {
   try {
-    // Prevent multiple rapid clicks
+
     if (button.disabled) return;
     button.disabled = true;
 
     await ContactsAPI.toggleFavorite(contactId);
 
-    // Toggle UI state immediately
+    // Toggle star UI immediately
     button.classList.toggle("active");
 
-    // Update stats asynchronously without blocking UI
-    loadContactStats().finally(() => {
-      button.disabled = false;
-    });
+    // 🔥 IMPORTANT: Reload sections properly
+    const activeSection = document.querySelector(".content-section.active");
+
+    if (activeSection?.id === "favoritesSection") {
+      // If inside favorites → reload favorites
+      await loadFavorites();
+    } else {
+      // Otherwise just reload contacts silently
+      await loadContacts({}, false);
+    }
+
+    // Update stats
+    loadContactStats().catch(console.error);
 
     APIUtils.showToast("Contact updated", "success");
   } catch (error) {
     console.error("Error toggling favorite:", error);
     APIUtils.showToast("Failed to update contact", "error");
+  } finally {
     button.disabled = false;
   }
 }
@@ -1317,6 +1327,7 @@ function showSection(sectionId) {
       case "favoritesSection":
         sectionTitle.textContent = "Favorites";
         sectionDescription.textContent = "Your most important contacts";
+        loadFavorites();
         break;
     }
   }
