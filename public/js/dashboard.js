@@ -1106,7 +1106,7 @@ function setupEventListeners() {
 
         switch (filter) {
           case 'favorites':
-            params.isFavorite = true;
+            params.is_Favorite = true;
             break;
           case 'recent':
             // Last 7 days
