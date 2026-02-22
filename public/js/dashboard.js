@@ -868,13 +868,18 @@ const sidebarToggle = document.getElementById('sidebarToggle');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
 sidebarToggle.addEventListener('click', () => {
-  sidebar.classList.toggle('active');
-  sidebarOverlay.classList.toggle('active');
+  // Only allow toggle on desktop
+  if (window.innerWidth > 768) {
+    sidebar.classList.toggle('active');
+    sidebarOverlay.classList.toggle('active');
+  }
 });
 
 sidebarOverlay.addEventListener('click', () => {
-  sidebar.classList.remove('active');
-  sidebarOverlay.classList.remove('active');
+  if (window.innerWidth > 768) {
+    sidebar.classList.remove('active');
+    sidebarOverlay.classList.remove('active');
+  }
 });
 
   // Navigation
