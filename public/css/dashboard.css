@@ -2641,12 +2641,12 @@ select.form-control {
 }
 
 /* ============================= */
-/* INSTAGRAM STYLE MOBILE NAV */
+/* PERFECT INSTAGRAM MOBILE NAV */
 /* ============================= */
 
 @media (max-width: 768px) {
 
-    /* 🔥 FORCE SHOW SIDEBAR */
+    /* Sidebar as bottom nav */
     .sidebar {
         transform: translateX(0) !important;
         position: fixed !important;
@@ -2655,18 +2655,18 @@ select.form-control {
         left: 0 !important;
 
         width: 100% !important;
-        height: 65px !important;
+        height: 60px !important;
 
         display: flex !important;
         flex-direction: row !important;
 
         border-right: none !important;
-        border-top: 1px solid var(--gray-200);
-        background: #fff !important;
+        border-top: 1px solid #e5e7eb;
+        background: #ffffff !important;
         z-index: 9999;
     }
 
-    /* Hide desktop stuff */
+    /* Hide everything not needed */
     .sidebar-header,
     .sidebar-footer,
     .user-profile,
@@ -2675,22 +2675,21 @@ select.form-control {
         display: none !important;
     }
 
-    /* Make nav horizontal */
+    /* Horizontal layout */
     .sidebar-nav {
         display: flex !important;
-        flex-direction: row !important;
         justify-content: space-around;
         align-items: center;
         width: 100%;
+        height: 100%;
         padding: 0;
     }
 
     .nav-section {
         display: contents;
-        margin: 0;
     }
 
-    /* Only show icons */
+    /* Icons only */
     .nav-item span:not(.nav-badge) {
         display: none !important;
     }
@@ -2700,25 +2699,42 @@ select.form-control {
         display: flex !important;
         justify-content: center;
         align-items: center;
-        padding: 0;
-        font-size: 22px;
+        height: 100%;
         border: none !important;
         background: transparent !important;
-    }
-
-    .nav-item.active {
-        background: transparent !important;
-        border: none !important;
-        color: var(--primary-color);
+        padding: 0 !important;
+        position: relative;
     }
 
     .nav-item i {
         font-size: 22px;
     }
 
-    /* Remove left margin from content */
+    /* Clean active style */
+    .nav-item.active {
+        background: transparent !important;
+        border: none !important;
+        color: #6366f1;
+    }
+
+    /* PERFECT badge position */
+    .nav-badge {
+        position: absolute;
+        top: 8px;
+        right: 28%;
+        font-size: 10px;
+        min-width: 16px;
+        height: 16px;
+        padding: 0 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50px;
+    }
+
+    /* Prevent content overlap */
     .main-content {
         margin-left: 0 !important;
-        padding-bottom: 90px !important;
+        padding-bottom: 80px !important;
     }
 }
