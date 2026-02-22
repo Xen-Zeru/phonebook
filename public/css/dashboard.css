@@ -2549,3 +2549,93 @@ select.form-control {
     color: var(--gray-400);
     font-size: 0.75rem;
 }
+
+/* ===============================
+   MOBILE RESPONSIVE IMPROVEMENTS
+=================================*/
+
+@media (max-width: 1024px) {
+
+  .dashboard-container {
+    display: flex;
+  }
+
+  /* Sidebar becomes off-canvas */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    height: 100vh;
+    width: 260px;
+    background: white;
+    z-index: 2000;
+    transition: left 0.3s ease;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  /* Overlay */
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1500;
+    display: none;
+  }
+
+  .sidebar-overlay.active {
+    display: block;
+  }
+
+  /* Main content full width */
+  .main-content {
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  /* Header stacking */
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .header-right {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .search-box-wrapper {
+    width: 100%;
+  }
+
+  .search-box input {
+    width: 100%;
+  }
+
+  /* Stats grid 2 columns */
+  .stats-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  /* Contacts grid auto */
+  .contacts-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  /* Add contact layout stack */
+  .add-contact-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-contact-preview {
+    margin-top: 2rem;
+  }
+
+}

@@ -863,14 +863,19 @@ function updateUIWithUserData() {
 
 function setupEventListeners() {
   // Sidebar toggle
-  const sidebarToggle = document.getElementById('sidebarToggle');
-  const sidebar = document.querySelector('.sidebar');
+const sidebar = document.querySelector('.sidebar');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-  if (sidebarToggle && sidebar) {
-    sidebarToggle.addEventListener('click', () => {
-      sidebar.classList.toggle('active');
-    });
-  }
+sidebarToggle.addEventListener('click', () => {
+  sidebar.classList.toggle('active');
+  sidebarOverlay.classList.toggle('active');
+});
+
+sidebarOverlay.addEventListener('click', () => {
+  sidebar.classList.remove('active');
+  sidebarOverlay.classList.remove('active');
+});
 
   // Navigation
   const navItems = document.querySelectorAll('.nav-item[data-section]');
