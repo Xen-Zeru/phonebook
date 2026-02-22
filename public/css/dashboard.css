@@ -2738,3 +2738,31 @@ select.form-control {
         padding-bottom: 80px !important;
     }
 }
+
+/* ============================= */
+/* MOBILE APP LOGO */
+/* ============================= */
+
+.mobile-app-logo {
+  display: none;
+}
+
+@media (max-width: 768px) {
+
+  .mobile-app-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin-bottom: 10px;
+  }
+
+  .mobile-app-logo img {
+    height: 28px;
+  }
+
+  /* Optional: hide breadcrumb on mobile for cleaner look */
+  .breadcrumb {
+    display: none;
+  }
+}
