@@ -2641,75 +2641,71 @@ select.form-control {
 }
 
 /* ============================= */
-/* MOBILE BOTTOM NAVIGATION */
+/* MOBILE ONLY BOTTOM NAV */
 /* ============================= */
 
 @media (max-width: 768px) {
 
+  /* Turn sidebar into bottom nav */
   .sidebar {
     position: fixed;
     bottom: 0;
     top: auto;
     left: 0;
     width: 100%;
-    height: 70px;
+    height: 65px;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding: 0;
     border-top: 1px solid #e5e7eb;
-    z-index: 1000;
+    background: #fff;
     transform: none !important;
+    padding: 0;
   }
 
+  /* Hide desktop-only parts */
   .sidebar-header,
-  .user-profile,
   .sidebar-footer,
-  .nav-section-title {
-    display: none;
-  }
-
-  .sidebar-nav {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-  }
-
-  .nav-section {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-  }
-
-  .nav-item {
-    flex-direction: column;
-    font-size: 12px;
-    gap: 4px;
-  }
-
-  .nav-item span {
-    font-size: 11px;
-  }
-
-  .nav-badge {
-    position: absolute;
-    top: 6px;
-    right: 20px;
-    font-size: 10px;
-  }
-
-  .main-content {
-    margin-left: 0 !important;
-    padding-bottom: 80px;
-  }
-
+  .nav-section-title,
+  .user-profile,
   .sidebar-toggle {
     display: none;
   }
 
-  .sidebar-overlay {
-    display: none !important;
+  /* Hide ALL nav items first */
+  .nav-item {
+    display: none;
+  }
+
+  /* Show only these 5 */
+  .nav-item[data-section="contacts"],
+  .nav-item[data-section="add-contact"],
+  .nav-item[data-section="favorites"],
+  .nav-item[data-section="profile"],
+  .logout-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+  }
+
+  /* Hide text labels */
+  .nav-item span {
+    display: none;
+  }
+
+  /* Make nav horizontal */
+  .sidebar-nav,
+  .nav-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  /* Prevent content from being hidden */
+  .main-content {
+    margin-left: 0 !important;
+    padding-bottom: 75px;
   }
 }
