@@ -160,6 +160,7 @@ a:hover {
 
 .btn-block {
     width: 100%;
+    cursor: pointer;
 }
 
 /* Forms */

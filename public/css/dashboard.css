@@ -2641,78 +2641,81 @@ select.form-control {
 }
 
 /* ============================= */
-/* MOBILE BOTTOM NAV (FINAL) */
+/* MOBILE INSTAGRAM-STYLE NAV */
 /* ============================= */
 
 @media (max-width: 768px) {
 
-  /* Convert sidebar to bottom nav */
+  /* Force sidebar visible */
   .sidebar {
+    display: flex !important;
     position: fixed;
     bottom: 0;
-    top: auto;
     left: 0;
+    top: auto;
     width: 100%;
     height: 65px;
-    background: #fff;
+    background: #ffffff;
     border-top: 1px solid #e5e7eb;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    padding: 0;
-    z-index: 1000;
+
+    /* iPhone safe area fix */
+    padding-bottom: env(safe-area-inset-bottom);
+
+    z-index: 9999;
   }
 
-  /* Hide desktop-only parts */
+  /* Hide desktop parts */
   .sidebar-header,
   .user-profile,
   .sidebar-footer,
-  .sidebar-toggle {
-    display: none !important;
-  }
-
-  /* 🔥 Remove MAIN & SETTINGS text */
+  .sidebar-toggle,
   .nav-label {
     display: none !important;
   }
 
-  /* Make navigation horizontal */
+  /* Make nav horizontal */
   .sidebar-nav {
-    display: flex;
+    display: flex !important;
     width: 100%;
     justify-content: space-around;
+    align-items: center;
   }
 
   .nav-section {
-    display: flex;
+    display: flex !important;
   }
 
-  /* Hide ONLY the text span (NOT badge) */
+  /* Hide text only (keep icons + badge) */
   .nav-item span:not(.nav-badge) {
     display: none !important;
   }
 
-  /* Style icons */
+  /* Style nav items */
   .nav-item {
+    flex: 1;
     display: flex !important;
     align-items: center;
     justify-content: center;
     font-size: 22px;
-    flex: 1;
     position: relative;
   }
 
-  /* Keep badge positioned nicely */
+  /* Badge positioning */
   .nav-badge {
     position: absolute;
-    top: 8px;
-    right: 20%;
+    top: 6px;
+    right: 22%;
     font-size: 10px;
   }
 
-  /* Prevent content from being covered */
+  /* Prevent content being hidden */
   .main-content {
     margin-left: 0 !important;
-    padding-bottom: 80px;
+    padding-bottom: 100px;
+  }
+
+  /* Prevent body from hiding fixed nav */
+  body {
+    overflow-x: hidden;
   }
 }
