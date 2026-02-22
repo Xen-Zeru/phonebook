@@ -2641,12 +2641,12 @@ select.form-control {
 }
 
 /* ============================= */
-/* MOBILE ONLY - BOTTOM NAV */
+/* MOBILE ONLY - CLEAN BOTTOM NAV */
 /* ============================= */
 
 @media (max-width: 768px) {
 
-  /* ===== Sidebar becomes bottom nav ===== */
+  /* Sidebar becomes bottom nav */
   .sidebar {
     position: fixed;
     bottom: 0;
@@ -2656,7 +2656,6 @@ select.form-control {
     height: 65px;
     display: flex;
     align-items: center;
-    justify-content: center;
     background: #ffffff;
     border-top: 1px solid #e5e7eb;
     padding: 0;
@@ -2664,24 +2663,21 @@ select.form-control {
     transform: none !important;
   }
 
-  /* ===== Hide desktop elements ===== */
-  .sidebar-header,
-  .sidebar-footer,
-  .nav-section-title,
-  .user-profile,
-  .sidebar-toggle {
+  /* Hide EVERYTHING inside sidebar first */
+  .sidebar * {
     display: none !important;
   }
 
-  /* ===== Make nav fully horizontal ===== */
+  /* Show only nav container */
   .sidebar-nav {
-    display: flex;
+    display: flex !important;
     width: 100%;
     height: 100%;
   }
 
-  .nav-section {
-    display: flex;
+  /* Show only first nav-section */
+  .sidebar-nav .nav-section:first-child {
+    display: flex !important;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
@@ -2689,12 +2685,12 @@ select.form-control {
     height: 100%;
   }
 
-  /* ===== Hide all nav items first ===== */
+  /* Hide all nav items */
   .nav-item {
     display: none !important;
   }
 
-  /* ===== Show only these 5 ===== */
+  /* Show only allowed icons */
   .nav-item[data-section="contacts"],
   .nav-item[data-section="add-contact"],
   .nav-item[data-section="favorites"],
@@ -2704,38 +2700,19 @@ select.form-control {
     justify-content: center;
     align-items: center;
     font-size: 20px;
-    height: 100%;
     flex: 1;
+    height: 100%;
   }
 
-  /* ===== Hide text labels ===== */
+  /* Remove text labels */
   .nav-item span {
     display: none !important;
   }
 
-  /* ===== Icon styling ===== */
-  .nav-item i {
-    transition: 0.2s ease;
-  }
-
-  .nav-item.active i {
-    color: #6366f1;
-    transform: scale(1.15);
-  }
-
-  /* Optional: make logout slightly red */
-  .logout-btn i {
-    color: #ef4444;
-  }
-
-  /* ===== Prevent content being hidden ===== */
+  /* Prevent content being hidden */
   .main-content {
     margin-left: 0 !important;
     padding-bottom: 75px;
   }
 
-  /* Remove overlay if exists */
-  .sidebar-overlay {
-    display: none !important;
-  }
 }
