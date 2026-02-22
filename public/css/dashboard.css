@@ -2646,7 +2646,7 @@ select.form-control {
 
 @media (max-width: 768px) {
 
-  /* Turn sidebar into bottom bar */
+  /* Convert sidebar to bottom nav */
   .sidebar {
     position: fixed;
     bottom: 0;
@@ -2663,7 +2663,7 @@ select.form-control {
     z-index: 1000;
   }
 
-  /* Hide desktop-only elements */
+  /* Hide desktop-only parts */
   .sidebar-header,
   .user-profile,
   .sidebar-footer,
@@ -2671,12 +2671,12 @@ select.form-control {
     display: none !important;
   }
 
-  /* 🔥 THIS removes MAIN & SETTINGS */
+  /* 🔥 Remove MAIN & SETTINGS text */
   .nav-label {
     display: none !important;
   }
 
-  /* Make nav horizontal */
+  /* Make navigation horizontal */
   .sidebar-nav {
     display: flex;
     width: 100%;
@@ -2687,17 +2687,27 @@ select.form-control {
     display: flex;
   }
 
-  /* Hide text, show only icons */
-  .nav-item span {
-    display: none;
+  /* Hide ONLY the text span (NOT badge) */
+  .nav-item span:not(.nav-badge) {
+    display: none !important;
   }
 
+  /* Style icons */
   .nav-item {
     display: flex !important;
     align-items: center;
     justify-content: center;
     font-size: 22px;
     flex: 1;
+    position: relative;
+  }
+
+  /* Keep badge positioned nicely */
+  .nav-badge {
+    position: absolute;
+    top: 8px;
+    right: 20%;
+    font-size: 10px;
   }
 
   /* Prevent content from being covered */
@@ -2705,5 +2715,4 @@ select.form-control {
     margin-left: 0 !important;
     padding-bottom: 80px;
   }
-
 }
