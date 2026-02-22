@@ -2740,29 +2740,36 @@ select.form-control {
 }
 
 /* ============================= */
-/* MOBILE APP LOGO */
+/* MOBILE BRAND HEADER */
 /* ============================= */
 
-.mobile-app-logo {
+.mobile-brand {
   display: none;
 }
 
 @media (max-width: 768px) {
 
-  .mobile-app-logo {
+  .mobile-brand {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 50px;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #4f46e5;
     margin-bottom: 10px;
   }
 
-  .mobile-app-logo img {
-    height: 28px;
+  .mobile-brand i {
+    font-size: 20px;
   }
 
-  /* Optional: hide breadcrumb on mobile for cleaner look */
+  /* Optional cleaner mobile look */
   .breadcrumb {
+    display: none;
+  }
+
+  .section-description {
     display: none;
   }
 }
